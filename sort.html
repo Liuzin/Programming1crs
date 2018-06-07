@@ -1,0 +1,89 @@
+
+<!DOCTYPE html>
+<html>
+ <head>
+   <title>Сортировка "пузырьком"</title>
+  <meta charset="utf-8">
+  <meta name="author" content="Ekaterina">
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+  <script>
+    $(function(){
+      $("body").append("<h1> <button id=sort >Сортировать</button> <button id=sor>Сортировка js</button> <button id=vr>Сравнение по времени</button> </h1>").append("<button id=add>Добавить</button><h3><input id='n'> полей</h3>");
+      $("#add").on("click", function(){
+        var s=""; for (i=0; i < $('#n').val(); i++) s +="<input value=' "  + Math.round(Math.random()*100) +   " ' class='chisla'>"; 
+        $("body").append(s);   
+         
+        $("#vr").on("click", function(){
+       			var mas1 = $("[class='chisla']").map(function(){return Number($(this).val())}).get();
+                console.clear()
+                var a = 0;
+         		var date = Date.now();
+          mas1.sort(function(a1,b){
+            a++;
+            if (a1 > b) return 1;
+            if (a1 < b) return -1;
+            
+          });
+          $("#add").after('<p>Количество милисекунд сортировки js c функцией sort()='+(Date.now() - date) +'</p>');
+          
+          var mas = $("[class='chisla']").map(function(){return Number($(this).val())}).get();
+                console.clear();
+          		var date = Date.now();
+          		var time;
+                var a = 0;
+                var b = true;    
+                while (b) {
+                   b = false; 
+                   for (var i=0; i < mas.length - 1; i++) {
+                        a++;
+                        if ( mas[i] > mas[i+1]) {
+                            var c = mas[i+1];
+                            mas[i+1]  = mas[i];
+                            mas[i]    = c;
+                            b = true;
+                        }
+                   }
+                }
+          
+          $("#add").after('<p>Количество милисекунд сортировки пузырьком ='+ (Date.now() - date) +'</p>');
+        });
+        $("#sor").on("click", function(){
+       			var mas = $("[class='chisla']").map(function(){return Number($(this).val())}).get();
+                console.clear();
+                var a = 0;
+          mas.sort(function(a1,b){
+            a++;
+            if (a1 > b) return 1;
+            if (a1 < b) return -1;
+            
+          });
+          $("[class='chisla']").each(function(i){  $(this).val  ( mas[i]  )  });
+          console.log(a);
+        });
+        $("#sort").on("click", function(){
+       			var mas = $("[class='chisla']").map(function(){return Number($(this).val())}).get();
+                console.clear()
+                var a = 0;
+                var b = true;    
+                while (b) {
+                   b = false; 
+                   for (var i=0; i < mas.length - 1; i++) {
+                        a++;
+                        if ( mas[i] > mas[i+1]) {
+                            var c = mas[i+1];
+                            mas[i+1]  = mas[i];
+                            mas[i]    = c;
+                            b = true;
+                        }
+                   }  
+                }           
+          		console.log(a);
+          		$("[class='chisla']").each(function(i){  $(this).val  ( mas[i]  )  }); 
+      	});
+      });
+    }); 
+  </script>
+ </head>
+ <body>
+ </body>
+</html>
